@@ -1,35 +1,35 @@
 # GEAP Ambient Expense Agent
 
 An event-driven expense-approval agent built on **ADK 2.0 graph workflows**, vibe-coded with
-**Antigravity** and **Agents CLI**. Business rules run as plain Python; the LLM is used only
-where judgment is needed.
+**Antigravity** and **Agents CLI**, and deployed to **Agent Runtime** on the Gemini Enterprise
+Agent Platform. Business rules run as plain Python; the LLM is used only where judgment is needed.
 
 | Expense | What happens |
 |---|---|
 | Under $100 | Auto-approved by code. No LLM call. |
-| $100 or more | Pre-LLM security screen, then Gemini risk review, then **pause for human approval** |
+| $100 or more | Security checkpoint, then Gemini risk review, then **pause for human approval** |
 | Prompt injection | Skips the model entirely and goes straight to a human, flagged as a security event |
 
-Part of a series on the **Gemini Enterprise Agent Platform**: Build, Scale, Govern, Optimize.
+Part of a series on the Gemini Enterprise Agent Platform: Build, Scale, Govern, Optimize.
 
 ## Credit
 
 Based on Google's codelab
 [Vibecode an ADK 2.0 Ambient Agent with Antigravity and Agents CLI](https://codelabs.developers.google.com/vibecode-ambient-expense-agent)
-(code samples Apache 2.0). The deployment step follows
+(code samples Apache 2.0). The deployment follows
 [Deploy an ADK agent to Agent Runtime using Agents CLI](https://codelabs.developers.google.com/enterprise-cloud-scale-deploying-the-expense-agent-to-agent-runtime-on-google-cloud).
 
 ## Architecture
 
 ```
 event (Pub/Sub or JSON)
-   -> extract_expense        parse payload, route on threshold (code)
+   -> extract_expense        parse payload, redact PII, route on threshold (code)
         |-- < $100  -> auto_approve (code)  ------------------------.
-        '-- >= $100 -> security_screen (code: redact PII, detect injection)
-                          |-- clean     -> risk_reviewer (Gemini)
+        '-- >= $100 -> security_checkpoint (code: detect injection)  |
+                          |-- clean     -> risk_reviewer (Gemini)    |
                           '-- injection -> human_approval (model bypassed)
                        risk_reviewer -> human_approval (RequestInput pause)
-                                                |
+                                                |                    |
                                           record_outcome <-----------'
 ```
 
@@ -40,9 +40,10 @@ event (Pub/Sub or JSON)
 | `expense_agent/` | The agent: `agent.py` (graph), `config.py` (threshold, model), `schemas.py` |
 | `app/` | Agents CLI wrapper that serves `expense_agent` (FastAPI, deployment adapters) |
 | `deployment/`, `Dockerfile` | Agents CLI deployment scaffold |
+| `scripts/test_deployed_engine.py` | Verifies a deployed engine, including resuming a paused session |
 | `tests/unit`, `tests/integration` | Routing, redaction, and decision-parsing tests |
 | `tests/eval/` | LLM-as-judge evals: routing correctness and security containment |
-| `artifacts/` | Example eval traces and grade results |
+| `artifacts/` | Example eval traces, grade results, and deployed-engine test output (IDs redacted) |
 
 ## What I changed beyond the lab
 
@@ -51,6 +52,8 @@ event (Pub/Sub or JSON)
 - PII redaction also covers workflow state, so the human-approval alert and payload never
   contain the raw SSN or card number.
 - The eval set includes boundary cases ($99.99 and exactly $100.00) and a rejected-by-human path.
+- The container image copies `expense_agent/` as well as `app/`. The scaffold's Dockerfile
+  copied only `app/`, which would have failed on import at startup.
 
 ## Run it locally
 
@@ -79,16 +82,37 @@ make generate-traces && make grade
 Two LLM-as-judge metrics score each trace from 1 to 5: routing correctness and security
 containment. Results land in `artifacts/grade_results/`.
 
+## Deploy to Agent Runtime
+
+```bash
+gcloud config set project <your-project-id>
+agents-cli deploy --dry-run
+agents-cli deploy --project <your-project-id> --region us-east1 --no-wait
+agents-cli deploy --status
+```
+
+Verified on the live engine:
+
+- $50 auto-approves with no model call.
+- $150 pauses for a human after a Gemini risk review.
+- A $1M injection with an SSN is redacted, skips the model, and escalates to a human.
+- Resuming with APPROVE approves; resuming with DISAPPROVE rejects (fail-closed).
+
+The Console Playground (preview) shows the pause but does not resume it; sending "APPROVE"
+there starts a new run and fails to parse. Resume by sending a `function_response` to the
+engine, as `scripts/test_deployed_engine.py` does.
+
 ## Security note
 
-The security screen is a **local, regex-based mock**. It catches the demo cases but is not a
+The security checkpoint is a **local, regex-based mock**. It catches the demo cases but is not a
 production control. In production, enforce policy outside the model with Agent Gateway,
-Model Armor, Agent Identity, and semantic governance policies.
+Model Armor, Agent Identity, and semantic governance policies. Also review what your logging
+setup stores: redaction inside the workflow does not by itself change what request logs capture.
 
 ## Status
 
 - `v1-local`: runs locally, evaluated with Agents CLI
-- `v2-deployed`: Agent Runtime deployment (in progress)
+- `v2-deployed`: deployed to Agent Runtime and verified
 
 ## License
 
