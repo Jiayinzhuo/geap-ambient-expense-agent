@@ -31,10 +31,43 @@ from expense_agent.config import AUTO_APPROVE_THRESHOLD, MODEL_NAME
 from expense_agent.schemas import ExpenseOutcome, ExpenseReport, RiskAssessment
 
 # Security regex patterns for PII scrubbing
-SSN_REGEX = re.compile(r"\b\d{3}[-\s]?\d{2}[-\s]?\d{4}\b")
-CC_REGEX = re.compile(
-    r"\b(?:\d{4}[-\s]?){3}\d{4}\b|\b3[47]\d{2}[-\s]?\d{6}[-\s]?\d{5}\b|\b\d{15,16}\b"
-)
+# Matches sequences of digits separated by optional spaces or dashes
+PII_DIGIT_SEQUENCE_REGEX = re.compile(r"\b\d+(?:[-\s]+\d+)*\b")
+
+
+def scrub_pii(text: str) -> tuple[str, list[str]]:
+    """Scrub SSNs and credit card numbers from text and track redacted categories.
+
+    - Credit card numbers: 13-19 digits (with optional spaces or dashes) -> [REDACTED_CARD]
+    - SSNs: dashed or undashed 9-digit numbers and any run of 9+ digits (with optional spaces or dashes) -> [REDACTED_SSN]
+    """
+    redacted: list[str] = []
+
+    def _replace_digit_sequence(match: re.Match) -> str:
+        val = match.group(0)
+        digits_only = re.sub(r"\D", "", val)
+        digit_count = len(digits_only)
+
+        # 13-19 digits: Credit card run (with spaces or dashes)
+        if 13 <= digit_count <= 19:
+            if "CARD" not in redacted:
+                redacted.append("CARD")
+            if "CREDIT_CARD" not in redacted:
+                redacted.append("CREDIT_CARD")
+            return "[REDACTED_CARD]"
+
+        # 9+ digits: SSN (dashed, undashed, or run of 9+ consecutive/separated digits)
+        if digit_count >= 9:
+            if "SSN" not in redacted:
+                redacted.append("SSN")
+            return "[REDACTED_SSN]"
+
+        return val
+
+    # Match sequences of digits separated by single spaces or dashes
+    cleaned = PII_DIGIT_SEQUENCE_REGEX.sub(_replace_digit_sequence, text)
+    return cleaned, redacted
+
 
 # Prompt injection heuristics: instruction overrides, jailbreaks, forced approval
 PROMPT_INJECTION_PATTERNS = [
@@ -53,18 +86,6 @@ PROMPT_INJECTION_PATTERNS = [
     r"respond\s+only\s+with\s+(?:approve|approved)",
 ]
 INJECTION_REGEX = re.compile("|".join(PROMPT_INJECTION_PATTERNS), re.IGNORECASE)
-
-
-def scrub_pii(text: str) -> tuple[str, list[str]]:
-    """Scrub SSNs and credit card numbers from text and track redacted categories."""
-    redacted: list[str] = []
-    if SSN_REGEX.search(text):
-        redacted.append("SSN")
-        text = SSN_REGEX.sub("[REDACTED_SSN]", text)
-    if CC_REGEX.search(text):
-        redacted.append("CREDIT_CARD")
-        text = CC_REGEX.sub("[REDACTED_CREDIT_CARD]", text)
-    return text, redacted
 
 
 def parse_payload(raw_input: Any) -> dict[str, Any]:
@@ -128,6 +149,14 @@ def extract_expense(ctx: Context, node_input: Any):
     raw_desc = raw_dict.get("description", "")
     clean_desc, redacted_categories = scrub_pii(raw_desc)
     raw_dict["description"] = clean_desc
+
+    for k, v in list(raw_dict.items()):
+        if isinstance(v, str) and k != "description":
+            clean_v, v_redacted = scrub_pii(v)
+            raw_dict[k] = clean_v
+            for cat in v_redacted:
+                if cat not in redacted_categories:
+                    redacted_categories.append(cat)
 
     expense = ExpenseReport(**raw_dict)
     expense_data = expense.model_dump()
