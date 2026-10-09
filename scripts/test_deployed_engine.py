@@ -122,6 +122,14 @@ def main():
         event_dict = json.loads(resp.data.decode("utf-8"))
         events_3.append(event_dict)
 
+    # Fail immediately if 14300000000 appears in any raw event in Case 3
+    for idx, ev in enumerate(events_3):
+        ev_str = json.dumps(ev)
+        if "14300000000" in ev_str:
+            raise AssertionError(
+                f"Security failure: '14300000000' leaked in Case 3 event {idx + 1}!\n{ev_str}"
+            )
+
     results["case_3"] = {
         "session_id": s3_id,
         "input": payload_3,
@@ -228,6 +236,14 @@ def main():
         "decision": "DISAPPROVE",
         "raw_events": events_4b_resume
     }
+
+    # Assert that "14300000000" appears nowhere in any raw event across all cases
+    for case_name, case_data in results.items():
+        events_json = json.dumps(case_data.get("raw_events", []))
+        if "14300000000" in events_json:
+            raise AssertionError(
+                f"Security failure: '14300000000' leaked into raw events of {case_name}!"
+            )
 
     os.makedirs("artifacts/deploy_test_results", exist_ok=True)
     out_file = "artifacts/deploy_test_results/test_run_results.json"
