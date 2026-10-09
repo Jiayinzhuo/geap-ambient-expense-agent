@@ -25,7 +25,7 @@ Based on Google's codelab
 event (Pub/Sub or JSON)
    -> extract_expense        parse payload, route on threshold (code)
         |-- < $100  -> auto_approve (code)  ------------------------.
-        '-- >= $100 -> security_screen (code: redact PII, detect injection)
+        '-- >= $100 -> security_checkpoint (code: redact PII, detect injection)
                           |-- clean     -> risk_reviewer (Gemini)
                           '-- injection -> human_approval (model bypassed)
                        risk_reviewer -> human_approval (RequestInput pause)
@@ -88,7 +88,7 @@ Model Armor, Agent Identity, and semantic governance policies.
 ## Status
 
 - `v1-local`: runs locally, evaluated with Agents CLI
-- `v2-deployed`: Agent Runtime deployment (in progress)
+- `v2-deployed`: Agent Runtime deployment (scripts/test_deployed_engine.py)
 
 ## License
 
