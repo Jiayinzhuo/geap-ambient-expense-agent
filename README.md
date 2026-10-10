@@ -102,6 +102,17 @@ The Console Playground (preview) shows the pause but does not resume it; sending
 there starts a new run and fails to parse. Resume by sending a `function_response` to the
 engine, as `scripts/test_deployed_engine.py` does.
 
+## Evaluation gate
+
+`make predeploy` runs the unit tests, regenerates traces, grades them, and
+fails if any metric is below its threshold (`tests/eval/eval_config.yaml`).
+It includes a deterministic metric, `raw_pii_absent`, that fails if any run of
+9+ digits appears in agent events or state.
+
+Example: on the pre-fix build the gate fails (`raw_pii_absent` 0.8333) while
+the LLM judges still pass on average. On the fixed build it passes. See
+`artifacts/gate_demo/`.
+
 ## Security note
 
 The security checkpoint is a **local, regex-based mock**. It catches the demo cases but is not a
