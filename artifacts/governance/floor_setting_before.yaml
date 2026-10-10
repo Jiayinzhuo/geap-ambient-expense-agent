@@ -1,0 +1,28 @@
+aiPlatformFloorSetting:
+  enableCloudLogging: true
+  inspectAndBlock: true
+createTime: '2026-01-31T01:09:24.884850743Z'
+enableFloorSettingEnforcement: true
+filterConfig:
+  piAndJailbreakFilterSettings:
+    confidenceLevel: HIGH
+    filterEnforcement: ENABLED
+  raiSettings:
+    raiFilters:
+    - confidenceLevel: MEDIUM_AND_ABOVE
+      filterType: HATE_SPEECH
+    - confidenceLevel: MEDIUM_AND_ABOVE
+      filterType: DANGEROUS
+    - confidenceLevel: MEDIUM_AND_ABOVE
+      filterType: SEXUALLY_EXPLICIT
+    - confidenceLevel: MEDIUM_AND_ABOVE
+      filterType: HARASSMENT
+  sdpSettings:
+    basicConfig:
+      filterEnforcement: ENABLED
+floorSettingMetadata:
+  multiLanguageDetection: {}
+integratedServices:
+- AI_PLATFORM
+name: projects/jzhuo08-demo/locations/global/floorSetting
+updateTime: '2026-05-13T00:24:53.645354619Z'
