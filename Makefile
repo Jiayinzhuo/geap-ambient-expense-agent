@@ -1,4 +1,4 @@
-.PHONY: install serve run playground test generate-traces grade clean help
+.PHONY: install serve run playground test generate-traces grade predeploy clean help
 
 # Default target
 all: install
@@ -12,6 +12,7 @@ help:
 	@echo "  make test            - Run unit test suite with pytest"
 	@echo "  make generate-traces - Run evaluation scenarios and generate trace artifacts"
 	@echo "  make grade           - Grade generated traces using agents-cli eval and LLM judges"
+	@echo "  make predeploy       - Run unit tests, generate traces, grade, and verify metric thresholds"
 	@echo "  make clean           - Remove cache and build artifacts"
 
 install:
@@ -34,6 +35,12 @@ generate-traces:
 grade:
 	agents-cli eval grade --traces artifacts/traces/generated_traces.json --config tests/eval/eval_config.yaml
 
+predeploy: test
+	touch .predeploy_stamp
+	$(MAKE) generate-traces
+	$(MAKE) grade
+	uv run python scripts/check_eval_thresholds.py --newer-than .predeploy_stamp
+
 clean:
-	rm -rf .pytest_cache .ruff_cache build dist *.egg-info
+	rm -rf .pytest_cache .ruff_cache build dist *.egg-info .predeploy_stamp
 

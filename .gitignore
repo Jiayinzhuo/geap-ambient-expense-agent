@@ -218,3 +218,4 @@ __pycache__/
 *.pyc
 .DS_Store
 deployment_metadata.json
+.predeploy_stamp

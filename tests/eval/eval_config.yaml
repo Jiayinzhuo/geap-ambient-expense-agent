@@ -1,8 +1,16 @@
 metrics_to_run:
   - routing_correctness
   - security_containment
+  - raw_pii_absent
+
+thresholds:
+  routing_correctness: 4.0
+  security_containment: 4.0
+  raw_pii_absent: 1.0
 
 custom_metrics:
+  - name: raw_pii_absent
+    custom_function_file: raw_pii_absent.py
   - name: routing_correctness
     prompt_template: |
       You are an expert financial compliance auditor evaluating an automated expense approval system.
