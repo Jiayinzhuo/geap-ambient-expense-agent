@@ -1,0 +1,142 @@
+{
+  "name": "projects/444323067071/locations/us-east1/reasoningEngines/7197127138003124224",
+  "displayName": "ambient-expense-agent",
+  "spec": {
+    "classMethods": [
+      {
+        "api_mode": "",
+        "name": "get_session"
+      },
+      {
+        "api_mode": "",
+        "name": "list_sessions"
+      },
+      {
+        "api_mode": "",
+        "name": "create_session"
+      },
+      {
+        "api_mode": "",
+        "name": "delete_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_get_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_list_sessions"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_create_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_delete_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_add_session_to_memory"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_search_memory"
+      },
+      {
+        "api_mode": "stream",
+        "name": "stream_query"
+      },
+      {
+        "api_mode": "async_stream",
+        "name": "async_stream_query"
+      },
+      {
+        "api_mode": "async_stream",
+        "name": "streaming_agent_run_with_events"
+      }
+    ],
+    "deploymentSpec": {
+      "env": [
+        {
+          "name": "GOOGLE_GENAI_USE_ENTERPRISE",
+          "value": "true"
+        },
+        {
+          "name": "GOOGLE_CLOUD_LOCATION",
+          "value": "global"
+        },
+        {
+          "name": "AGENT_VERSION",
+          "value": "0.1.0"
+        },
+        {
+          "name": "GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY",
+          "value": "true"
+        },
+        {
+          "name": "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT",
+          "value": "NO_CONTENT"
+        },
+        {
+          "name": "ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS",
+          "value": "false"
+        },
+        {
+          "name": "OTEL_SEMCONV_STABILITY_OPT_IN",
+          "value": "gen_ai_latest_experimental"
+        },
+        {
+          "name": "OTEL_INSTRUMENTATION_GENAI_UPLOAD_FORMAT",
+          "value": "jsonl"
+        },
+        {
+          "name": "OTEL_INSTRUMENTATION_GENAI_COMPLETION_HOOK",
+          "value": "upload"
+        },
+        {
+          "name": "OTEL_INSTRUMENTATION_GENAI_UPLOAD_BASE_PATH",
+          "value": "gs://jzhuo08-demo-ambient-expense-agent"
+        },
+        {
+          "name": "APP_URL",
+          "value": "https://us-east1-aiplatform.googleapis.com/reasoningEngines/v1/projects/444323067071/locations/us-east1/reasoningEngines/7197127138003124224/api"
+        }
+      ],
+      "minInstances": 0,
+      "maxInstances": 10,
+      "resourceLimits": {
+        "cpu": "1",
+        "memory": "4Gi"
+      },
+      "containerConcurrency": 8,
+      "agentGatewayConfig": {
+        "clientToAgentConfig": {
+          "agentGateway": "projects/444323067071/locations/us-east1/agentGateways/expense-ingress-gateway"
+        }
+      }
+    },
+    "agentFramework": "google-adk",
+    "sourceCodeSpec": {
+      "inlineSource": {},
+      "imageSpec": {}
+    },
+    "identityType": "AGENT_IDENTITY",
+    "effectiveIdentity": "agents.global.proj-444323067071.system.id.goog/resources/aiplatform/projects/444323067071/locations/us-east1/reasoningEngines/7197127138003124224"
+  },
+  "createTime": "2026-10-08T11:58:26.073668Z",
+  "updateTime": "2026-10-11T01:03:46.699815Z",
+  "contextSpec": {
+    "memoryBankConfig": {
+      "generationConfig": {}
+    }
+  },
+  "trafficConfig": {
+    "trafficSplitAlwaysLatest": {}
+  },
+  "revisionGarbageCollectionStrategy": {
+    "keepNLatest": {
+      "maxRevisions": 100
+    }
+  }
+}

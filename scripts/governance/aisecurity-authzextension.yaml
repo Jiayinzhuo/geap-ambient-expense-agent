@@ -1,0 +1,6 @@
+name: expense-ingress-gateway-aisecurity-authzextension
+service: modelarmor.us-east1.rep.googleapis.com
+metadata:
+  model_armor_settings: '[{"response_template_id":"projects/jzhuo08-demo/locations/us-east1/templates/expense-armor-template","request_template_id":"projects/jzhuo08-demo/locations/us-east1/templates/expense-armor-template"}]'
+failOpen: false
+timeout: 10s

@@ -1,0 +1,7 @@
+name: projects/444323067071/locations/us-east1/agentGateways/expense-ingress-gateway
+description: "Client to Agent ingress gateway for the ambient expense agent"
+protocols:
+  - MCP
+  - PROTOCOL_UNSPECIFIED
+googleManaged:
+  governedAccessPath: CLIENT_TO_AGENT
