@@ -31,7 +31,7 @@ Your account needs Owner (or the Model Armor admin and Network Services roles). 
 
 Script: [`scripts/governance/setup_model_armor.sh`](../scripts/governance/setup_model_armor.sh). Read it before running it.
 
-It creates `expense-armor-template` in `us-east1`: prompt-injection / jailbreak filter at medium and above, basic Sensitive Data Protection, `INSPECT_AND_BLOCK`, metadata logging on.
+It creates `expense-armor-template` in `us-east1`: prompt-injection / jailbreak filter at medium and above, basic Sensitive Data Protection, metadata logging on. Check the script for the enforcement setting it uses.
 
 Two things that cost time:
 
