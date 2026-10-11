@@ -219,3 +219,4 @@ __pycache__/
 .DS_Store
 deployment_metadata.json
 .predeploy_stamp
+artifacts/governance/floor_setting_after.yaml
