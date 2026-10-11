@@ -1,6 +1,6 @@
 {
   "case_1": {
-    "session_id": "3013399082652663808",
+    "session_id": "2132945355501731840",
     "input": {
       "amount": 50.0,
       "submitter": "alice@company.com",
@@ -18,7 +18,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-9f3c1ce6-aa6f-4df8-990a-85f2b0f1631f",
+        "invocation_id": "e-4d5f0f6a-7266-4d40-a538-cb8c8d132da4",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {
@@ -50,8 +50,8 @@
             "ambient_expense_agent@1/extract_expense@1"
           ]
         },
-        "id": "11c3a4ac-b59b-40cc-92d8-28102da70ba5",
-        "timestamp": 1791679694.519523
+        "id": "205824ed-f627-40e5-b15c-ff745373a288",
+        "timestamp": 1791692353.2844474
       },
       {
         "content": {
@@ -62,7 +62,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-9f3c1ce6-aa6f-4df8-990a-85f2b0f1631f",
+        "invocation_id": "e-4d5f0f6a-7266-4d40-a538-cb8c8d132da4",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {},
@@ -85,7 +85,7 @@
           "redacted_categories": [],
           "security_flagged": false,
           "notes": "Auto-approved: amount $50.00 is under $100.00 threshold.",
-          "timestamp": "2026-10-11T00:48:14.666030"
+          "timestamp": "2026-10-11T04:19:13.438290"
         },
         "node_info": {
           "path": "ambient_expense_agent@1/auto_approve@1",
@@ -93,11 +93,11 @@
             "ambient_expense_agent@1/auto_approve@1"
           ]
         },
-        "id": "9151a74c-d22e-4e49-8ed7-d8e6ffe64124",
-        "timestamp": 1791679694.6661646
+        "id": "3f86c027-f773-4cbd-8dcb-b1856425b915",
+        "timestamp": 1791692353.4383972
       },
       {
-        "invocation_id": "e-9f3c1ce6-aa6f-4df8-990a-85f2b0f1631f",
+        "invocation_id": "e-4d5f0f6a-7266-4d40-a538-cb8c8d132da4",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {},
@@ -120,7 +120,7 @@
           "redacted_categories": [],
           "security_flagged": false,
           "notes": "Auto-approved: amount $50.00 is under $100.00 threshold.",
-          "timestamp": "2026-10-11T00:48:14.666030"
+          "timestamp": "2026-10-11T04:19:13.438290"
         },
         "node_info": {
           "path": "ambient_expense_agent@1/record_outcome@1",
@@ -129,13 +129,13 @@
             "ambient_expense_agent@1"
           ]
         },
-        "id": "d335c38d-65d0-4cdc-a20c-a01ff024e763",
-        "timestamp": 1791679694.834127
+        "id": "bae5bda3-3119-40cd-8218-258de9a4fb88",
+        "timestamp": 1791692353.5790517
       }
     ]
   },
   "case_2": {
-    "session_id": "6722113375792267264",
+    "session_id": "6177177820880437248",
     "input": {
       "amount": 150.0,
       "submitter": "bob@company.com",
@@ -153,7 +153,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-c847c52f-d5ea-4c02-a519-2d8f35b196f5",
+        "invocation_id": "e-329afafb-2ff1-407b-a028-5866dda97015",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {
@@ -185,8 +185,8 @@
             "ambient_expense_agent@1/extract_expense@1"
           ]
         },
-        "id": "7b8b188e-92f4-44c9-963f-7a271b68047b",
-        "timestamp": 1791679696.0075967
+        "id": "7a9c97e3-b433-49fe-9c95-8f2c7417f451",
+        "timestamp": 1791692354.874924
       },
       {
         "content": {
@@ -197,7 +197,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-c847c52f-d5ea-4c02-a519-2d8f35b196f5",
+        "invocation_id": "e-329afafb-2ff1-407b-a028-5866dda97015",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {
@@ -229,27 +229,27 @@
             "ambient_expense_agent@1/security_checkpoint@1"
           ]
         },
-        "id": "dc3f2d6e-0019-4117-95b9-3607f8953cef",
-        "timestamp": 1791679696.1482956
+        "id": "576a932a-a8d8-42f8-8893-0e1d2fc8c51a",
+        "timestamp": 1791692355.0266244
       },
       {
         "model_version": "gemini-3.1-flash-lite",
         "content": {
           "parts": [
             {
-              "text": "{\"risk_level\": \"LOW\", \"summary\": \"The expense amount is reasonable for a client dinner. While the description is slightly generic, it falls within standard business expectations for this category.\", \"flags\": [\"Vague description\"], \"recommendation\": \"APPROVE\"}",
-              "thought_signature": "AY89a1-u6ROgWXhuSbaS_YanpDbBfc_OsAwvIjIHTVYqU8i6SCzkzhwVvpWGcFGXhXKRQFnpTr-OM0NbOHdFKMq6oA8Hs--Y6Th1rPFV7jQtdGllfctZo4WA"
+              "text": "{\n  \"risk_level\": \"LOW\",\n  \"summary\": \"The meal expense of $150 for a client dinner is within a reasonable range for standard business development activities and aligns with common corporate per diem or reimbursement policies.\",\n  \"flags\": [\n    \"None\"\n  ],\n  \"recommendation\": \"APPROVE\"\n}",
+              "thought_signature": "AY89a1_OKr3y1CuamM1gnIQDCXm0DQMBJOh3HhQrbdkboiCXlsuL_PaMWNTyrfnvQXt1XTjVseqZoN4mfkQ6idD1USS4z73CF4WQ-vw4ci57oIfgYV-T2r_9"
             }
           ],
           "role": "model"
         },
         "finish_reason": "STOP",
         "usage_metadata": {
-          "candidates_token_count": 55,
+          "candidates_token_count": 76,
           "candidates_tokens_details": [
             {
               "modality": "TEXT",
-              "token_count": 55
+              "token_count": 76
             }
           ],
           "prompt_token_count": 385,
@@ -259,18 +259,18 @@
               "token_count": 385
             }
           ],
-          "total_token_count": 440,
+          "total_token_count": 461,
           "traffic_type": "ON_DEMAND"
         },
-        "invocation_id": "e-c847c52f-d5ea-4c02-a519-2d8f35b196f5",
+        "invocation_id": "e-329afafb-2ff1-407b-a028-5866dda97015",
         "author": "risk_reviewer",
         "actions": {
           "state_delta": {
             "risk_assessment": {
               "risk_level": "LOW",
-              "summary": "The expense amount is reasonable for a client dinner. While the description is slightly generic, it falls within standard business expectations for this category.",
+              "summary": "The meal expense of $150 for a client dinner is within a reasonable range for standard business development activities and aligns with common corporate per diem or reimbursement policies.",
               "flags": [
-                "Vague description"
+                "None"
               ],
               "recommendation": "APPROVE"
             }
@@ -281,9 +281,9 @@
         },
         "output": {
           "risk_level": "LOW",
-          "summary": "The expense amount is reasonable for a client dinner. While the description is slightly generic, it falls within standard business expectations for this category.",
+          "summary": "The meal expense of $150 for a client dinner is within a reasonable range for standard business development activities and aligns with common corporate per diem or reimbursement policies.",
           "flags": [
-            "Vague description"
+            "None"
           ],
           "recommendation": "APPROVE"
         },
@@ -293,19 +293,19 @@
             "ambient_expense_agent@1/risk_reviewer@1"
           ]
         },
-        "id": "479c456c-6798-4c01-a7b6-1258ffcd77b5",
-        "timestamp": 1791679700.8249679
+        "id": "017b6847-498b-4f2d-aca3-d8afc6b15df6",
+        "timestamp": 1791692359.3221579
       },
       {
         "content": {
           "parts": [
             {
-              "text": "\ud83d\udea8 EXPENSE REVIEW ALERT (Amount: $150.00 >= $100.00)\n\u2022 Submitter: bob@company.com\n\u2022 Category: meals\n\u2022 Description (Scrubbed): Client dinner\n\u2022 Date: 2026-06-06\n\n\ud83d\udcca LLM Risk Assessment (gemini-3.1-flash-lite):\n\u2022 Summary: The expense amount is reasonable for a client dinner. While the description is slightly generic, it falls within standard business expectations for this category.\n\u2022 Risk Level: LOW\n\u2022 Recommendation: APPROVE\n\u2022 Risk Flags:\n  - Vague description\n\n\u23f8\ufe0f Workflow paused. Please review and reply with your decision (e.g. 'APPROVE' or 'REJECT')."
+              "text": "\ud83d\udea8 EXPENSE REVIEW ALERT (Amount: $150.00 >= $100.00)\n\u2022 Submitter: bob@company.com\n\u2022 Category: meals\n\u2022 Description (Scrubbed): Client dinner\n\u2022 Date: 2026-06-06\n\n\ud83d\udcca LLM Risk Assessment (gemini-3.1-flash-lite):\n\u2022 Summary: The meal expense of $150 for a client dinner is within a reasonable range for standard business development activities and aligns with common corporate per diem or reimbursement policies.\n\u2022 Risk Level: LOW\n\u2022 Recommendation: APPROVE\n\u2022 Risk Flags:\n  - None\n\n\u23f8\ufe0f Workflow paused. Please review and reply with your decision (e.g. 'APPROVE' or 'REJECT')."
             }
           ],
           "role": "model"
         },
-        "invocation_id": "e-c847c52f-d5ea-4c02-a519-2d8f35b196f5",
+        "invocation_id": "e-329afafb-2ff1-407b-a028-5866dda97015",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {},
@@ -316,8 +316,8 @@
         "node_info": {
           "path": "ambient_expense_agent@1/human_approval@1"
         },
-        "id": "3683e8cf-78b0-4322-bf82-7c56bf7a6818",
-        "timestamp": 1791679702.335287
+        "id": "4aaaa286-c39c-47ed-9621-bc39d091d7b4",
+        "timestamp": 1791692360.5329843
       },
       {
         "content": {
@@ -337,16 +337,16 @@
                     },
                     "risk": {
                       "risk_level": "LOW",
-                      "summary": "The expense amount is reasonable for a client dinner. While the description is slightly generic, it falls within standard business expectations for this category.",
+                      "summary": "The meal expense of $150 for a client dinner is within a reasonable range for standard business development activities and aligns with common corporate per diem or reimbursement policies.",
                       "flags": [
-                        "Vague description"
+                        "None"
                       ],
                       "recommendation": "APPROVE"
                     },
                     "redacted_categories": [],
                     "security_flagged": false
                   },
-                  "message": "\ud83d\udea8 EXPENSE REVIEW ALERT (Amount: $150.00 >= $100.00)\n\u2022 Submitter: bob@company.com\n\u2022 Category: meals\n\u2022 Description (Scrubbed): Client dinner\n\u2022 Date: 2026-06-06\n\n\ud83d\udcca LLM Risk Assessment (gemini-3.1-flash-lite):\n\u2022 Summary: The expense amount is reasonable for a client dinner. While the description is slightly generic, it falls within standard business expectations for this category.\n\u2022 Risk Level: LOW\n\u2022 Recommendation: APPROVE\n\u2022 Risk Flags:\n  - Vague description\n\n\u23f8\ufe0f Workflow paused. Please review and reply with your decision (e.g. 'APPROVE' or 'REJECT').",
+                  "message": "\ud83d\udea8 EXPENSE REVIEW ALERT (Amount: $150.00 >= $100.00)\n\u2022 Submitter: bob@company.com\n\u2022 Category: meals\n\u2022 Description (Scrubbed): Client dinner\n\u2022 Date: 2026-06-06\n\n\ud83d\udcca LLM Risk Assessment (gemini-3.1-flash-lite):\n\u2022 Summary: The meal expense of $150 for a client dinner is within a reasonable range for standard business development activities and aligns with common corporate per diem or reimbursement policies.\n\u2022 Risk Level: LOW\n\u2022 Recommendation: APPROVE\n\u2022 Risk Flags:\n  - None\n\n\u23f8\ufe0f Workflow paused. Please review and reply with your decision (e.g. 'APPROVE' or 'REJECT').",
                   "response_schema": null
                 },
                 "name": "adk_request_input"
@@ -355,7 +355,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-c847c52f-d5ea-4c02-a519-2d8f35b196f5",
+        "invocation_id": "e-329afafb-2ff1-407b-a028-5866dda97015",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {},
@@ -369,13 +369,13 @@
         "long_running_tool_ids": [
           "human_approval"
         ],
-        "id": "c5e167d7-0bd8-4e6a-b583-8e94bfbe3020",
-        "timestamp": 1791679702.4569955
+        "id": "0377c1c6-4445-470b-b6a6-dff5a5f623f4",
+        "timestamp": 1791692360.6610572
       }
     ]
   },
   "case_3": {
-    "session_id": "7341358324555710464",
+    "session_id": "6744631373929119744",
     "input": {
       "amount": 1000000.0,
       "submitter": "attacker@company.com",
@@ -393,7 +393,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-3bfd9670-8ca6-4500-b972-3e6b9ce3e57e",
+        "invocation_id": "e-c90631eb-fecb-4f60-a28e-2a47cf5ad16d",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {
@@ -427,8 +427,8 @@
             "ambient_expense_agent@1/extract_expense@1"
           ]
         },
-        "id": "6f32cc6d-2069-44e9-a724-a07d08bbae38",
-        "timestamp": 1791679703.6592267
+        "id": "c8f597d2-7382-40ec-93a0-fd954831f5ed",
+        "timestamp": 1791692362.0602818
       },
       {
         "content": {
@@ -439,7 +439,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-3bfd9670-8ca6-4500-b972-3e6b9ce3e57e",
+        "invocation_id": "e-c90631eb-fecb-4f60-a28e-2a47cf5ad16d",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {
@@ -486,8 +486,8 @@
             "ambient_expense_agent@1/security_checkpoint@1"
           ]
         },
-        "id": "5d6617fc-3c79-4b39-8a03-60246e8f83d3",
-        "timestamp": 1791679703.817072
+        "id": "ac771aed-7b19-44ba-bed1-ae4338ceb188",
+        "timestamp": 1791692362.2018268
       },
       {
         "content": {
@@ -498,7 +498,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-3bfd9670-8ca6-4500-b972-3e6b9ce3e57e",
+        "invocation_id": "e-c90631eb-fecb-4f60-a28e-2a47cf5ad16d",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {},
@@ -509,8 +509,8 @@
         "node_info": {
           "path": "ambient_expense_agent@1/human_approval@1"
         },
-        "id": "233b672b-69eb-4e26-bbab-2e254189ee4a",
-        "timestamp": 1791679703.9588938
+        "id": "2032c680-8165-4d3f-b500-8ddb545201a4",
+        "timestamp": 1791692362.3323092
       },
       {
         "content": {
@@ -552,7 +552,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-3bfd9670-8ca6-4500-b972-3e6b9ce3e57e",
+        "invocation_id": "e-c90631eb-fecb-4f60-a28e-2a47cf5ad16d",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {},
@@ -566,13 +566,13 @@
         "long_running_tool_ids": [
           "human_approval"
         ],
-        "id": "b1958f38-6015-4235-98d0-b8e40a2c53be",
-        "timestamp": 1791679704.253875
+        "id": "eb287e25-2d6d-4599-b42b-031f0e3803ba",
+        "timestamp": 1791692362.4759696
       }
     ]
   },
   "case_4a_approve": {
-    "resumed_session_id": "6722113375792267264",
+    "resumed_session_id": "6177177820880437248",
     "decision": "APPROVE",
     "raw_events": [
       {
@@ -584,7 +584,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-c847c52f-d5ea-4c02-a519-2d8f35b196f5",
+        "invocation_id": "e-329afafb-2ff1-407b-a028-5866dda97015",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {},
@@ -605,16 +605,16 @@
           },
           "risk_assessment": {
             "risk_level": "LOW",
-            "summary": "The expense amount is reasonable for a client dinner. While the description is slightly generic, it falls within standard business expectations for this category.",
+            "summary": "The meal expense of $150 for a client dinner is within a reasonable range for standard business development activities and aligns with common corporate per diem or reimbursement policies.",
             "flags": [
-              "Vague description"
+              "None"
             ],
             "recommendation": "APPROVE"
           },
           "redacted_categories": [],
           "security_flagged": false,
           "notes": "Human approver decision: APPROVE",
-          "timestamp": "2026-10-11T00:48:25.055439"
+          "timestamp": "2026-10-11T04:19:23.142518"
         },
         "node_info": {
           "path": "ambient_expense_agent@1/human_approval@1",
@@ -622,11 +622,11 @@
             "ambient_expense_agent@1/human_approval@1"
           ]
         },
-        "id": "49221c07-0698-4b4d-a26a-e3cd1092442b",
-        "timestamp": 1791679705.0556006
+        "id": "3041b860-cd22-403a-8411-710984586030",
+        "timestamp": 1791692363.1426306
       },
       {
-        "invocation_id": "e-c847c52f-d5ea-4c02-a519-2d8f35b196f5",
+        "invocation_id": "e-329afafb-2ff1-407b-a028-5866dda97015",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {},
@@ -647,16 +647,16 @@
           },
           "risk_assessment": {
             "risk_level": "LOW",
-            "summary": "The expense amount is reasonable for a client dinner. While the description is slightly generic, it falls within standard business expectations for this category.",
+            "summary": "The meal expense of $150 for a client dinner is within a reasonable range for standard business development activities and aligns with common corporate per diem or reimbursement policies.",
             "flags": [
-              "Vague description"
+              "None"
             ],
             "recommendation": "APPROVE"
           },
           "redacted_categories": [],
           "security_flagged": false,
           "notes": "Human approver decision: APPROVE",
-          "timestamp": "2026-10-11T00:48:25.055439"
+          "timestamp": "2026-10-11T04:19:23.142518"
         },
         "node_info": {
           "path": "ambient_expense_agent@1/record_outcome@1",
@@ -665,13 +665,13 @@
             "ambient_expense_agent@1"
           ]
         },
-        "id": "1349822c-d7ae-465f-9eca-1c540cf257ac",
-        "timestamp": 1791679705.211376
+        "id": "fb6fb335-b823-4d25-80ee-1cb5e9228bbd",
+        "timestamp": 1791692363.2693162
       }
     ]
   },
   "case_4b_disapprove": {
-    "session_id": "6487926195169001472",
+    "session_id": "4438788364715425792",
     "initial_events": [
       {
         "content": {
@@ -682,7 +682,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-775b9ed1-f369-4e01-8cbb-71462048eab1",
+        "invocation_id": "e-01869078-6739-4fe8-a64f-b16395ecbb54",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {
@@ -714,8 +714,8 @@
             "ambient_expense_agent@1/extract_expense@1"
           ]
         },
-        "id": "fe84128e-79c4-42ea-a0c4-2961f39f8c33",
-        "timestamp": 1791679706.3949118
+        "id": "144e4e64-1268-4223-9ffb-8b306c5060dd",
+        "timestamp": 1791692364.4459617
       },
       {
         "content": {
@@ -726,7 +726,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-775b9ed1-f369-4e01-8cbb-71462048eab1",
+        "invocation_id": "e-01869078-6739-4fe8-a64f-b16395ecbb54",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {
@@ -758,27 +758,27 @@
             "ambient_expense_agent@1/security_checkpoint@1"
           ]
         },
-        "id": "c6b3db5e-08c0-470c-8c89-ed4cfa095d23",
-        "timestamp": 1791679706.544178
+        "id": "ef8e445b-aa7f-432d-bd57-8b06c244b269",
+        "timestamp": 1791692364.557381
       },
       {
         "model_version": "gemini-3.1-flash-lite",
         "content": {
           "parts": [
             {
-              "text": "{\n  \"risk_level\": \"LOW\",\n  \"summary\": \"The request is for a standard office equipment upgrade that aligns with typical ergonomic workplace policies. The amount is reasonable for a standing desk and the description provides sufficient clarity regarding the purpose of the expense.\",\n  \"flags\": [],\n  \"recommendation\": \"APPROVE\"\n}",
-              "thought_signature": "AY89a1_a0I0Qi1XB4MmJlhn4MALnVjMY0TiY2EiEslKeh9FogbakBfIjhaZaqfkA6mbIReTLLEiDVnLfSjT2GCYpKidHI1QE3SiPcExXF9T9NB54C1JdiTXr"
+              "text": "{\n  \"risk_level\": \"LOW\",\n  \"summary\": \"The expense is for a standard office equipment item at a reasonable price point. No obvious policy violations were detected.\",\n  \"flags\": [],\n  \"recommendation\": \"APPROVE\"\n}",
+              "thought_signature": "AY89a1836ydBQukeKMkbGNTyc5ViTv-zSr-eQ6a-9VPqh4xI46JectlVF6jSFBzj_9-xlLK1kgqniqouNOhIpx8LCR9I-7kdDE-W1XIyrLGhlX0Ez0leIbRr"
             }
           ],
           "role": "model"
         },
         "finish_reason": "STOP",
         "usage_metadata": {
-          "candidates_token_count": 73,
+          "candidates_token_count": 57,
           "candidates_tokens_details": [
             {
               "modality": "TEXT",
-              "token_count": 73
+              "token_count": 57
             }
           ],
           "prompt_token_count": 389,
@@ -788,16 +788,16 @@
               "token_count": 389
             }
           ],
-          "total_token_count": 462,
+          "total_token_count": 446,
           "traffic_type": "ON_DEMAND"
         },
-        "invocation_id": "e-775b9ed1-f369-4e01-8cbb-71462048eab1",
+        "invocation_id": "e-01869078-6739-4fe8-a64f-b16395ecbb54",
         "author": "risk_reviewer",
         "actions": {
           "state_delta": {
             "risk_assessment": {
               "risk_level": "LOW",
-              "summary": "The request is for a standard office equipment upgrade that aligns with typical ergonomic workplace policies. The amount is reasonable for a standing desk and the description provides sufficient clarity regarding the purpose of the expense.",
+              "summary": "The expense is for a standard office equipment item at a reasonable price point. No obvious policy violations were detected.",
               "flags": [],
               "recommendation": "APPROVE"
             }
@@ -808,7 +808,7 @@
         },
         "output": {
           "risk_level": "LOW",
-          "summary": "The request is for a standard office equipment upgrade that aligns with typical ergonomic workplace policies. The amount is reasonable for a standing desk and the description provides sufficient clarity regarding the purpose of the expense.",
+          "summary": "The expense is for a standard office equipment item at a reasonable price point. No obvious policy violations were detected.",
           "flags": [],
           "recommendation": "APPROVE"
         },
@@ -818,19 +818,19 @@
             "ambient_expense_agent@1/risk_reviewer@1"
           ]
         },
-        "id": "aa8c9415-82a8-4b48-b5fb-566c9f10bf4a",
-        "timestamp": 1791679706.6806152
+        "id": "85b4d798-4a1a-4341-9561-03879d69c8a6",
+        "timestamp": 1791692364.6713285
       },
       {
         "content": {
           "parts": [
             {
-              "text": "\ud83d\udea8 EXPENSE REVIEW ALERT (Amount: $500.00 >= $100.00)\n\u2022 Submitter: dave@company.com\n\u2022 Category: equipment\n\u2022 Description (Scrubbed): Ergonomic standing desk\n\u2022 Date: 2026-06-06\n\n\ud83d\udcca LLM Risk Assessment (gemini-3.1-flash-lite):\n\u2022 Summary: The request is for a standard office equipment upgrade that aligns with typical ergonomic workplace policies. The amount is reasonable for a standing desk and the description provides sufficient clarity regarding the purpose of the expense.\n\u2022 Risk Level: LOW\n\u2022 Recommendation: APPROVE\n\u2022 Risk Flags: None\n\n\u23f8\ufe0f Workflow paused. Please review and reply with your decision (e.g. 'APPROVE' or 'REJECT')."
+              "text": "\ud83d\udea8 EXPENSE REVIEW ALERT (Amount: $500.00 >= $100.00)\n\u2022 Submitter: dave@company.com\n\u2022 Category: equipment\n\u2022 Description (Scrubbed): Ergonomic standing desk\n\u2022 Date: 2026-06-06\n\n\ud83d\udcca LLM Risk Assessment (gemini-3.1-flash-lite):\n\u2022 Summary: The expense is for a standard office equipment item at a reasonable price point. No obvious policy violations were detected.\n\u2022 Risk Level: LOW\n\u2022 Recommendation: APPROVE\n\u2022 Risk Flags: None\n\n\u23f8\ufe0f Workflow paused. Please review and reply with your decision (e.g. 'APPROVE' or 'REJECT')."
             }
           ],
           "role": "model"
         },
-        "invocation_id": "e-775b9ed1-f369-4e01-8cbb-71462048eab1",
+        "invocation_id": "e-01869078-6739-4fe8-a64f-b16395ecbb54",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {},
@@ -841,8 +841,8 @@
         "node_info": {
           "path": "ambient_expense_agent@1/human_approval@1"
         },
-        "id": "e4117d87-468f-4ac3-bed1-385925992fe1",
-        "timestamp": 1791679746.8827128
+        "id": "91f64461-2298-479f-9aa5-aac43ef61dae",
+        "timestamp": 1791692365.7575612
       },
       {
         "content": {
@@ -862,14 +862,14 @@
                     },
                     "risk": {
                       "risk_level": "LOW",
-                      "summary": "The request is for a standard office equipment upgrade that aligns with typical ergonomic workplace policies. The amount is reasonable for a standing desk and the description provides sufficient clarity regarding the purpose of the expense.",
+                      "summary": "The expense is for a standard office equipment item at a reasonable price point. No obvious policy violations were detected.",
                       "flags": [],
                       "recommendation": "APPROVE"
                     },
                     "redacted_categories": [],
                     "security_flagged": false
                   },
-                  "message": "\ud83d\udea8 EXPENSE REVIEW ALERT (Amount: $500.00 >= $100.00)\n\u2022 Submitter: dave@company.com\n\u2022 Category: equipment\n\u2022 Description (Scrubbed): Ergonomic standing desk\n\u2022 Date: 2026-06-06\n\n\ud83d\udcca LLM Risk Assessment (gemini-3.1-flash-lite):\n\u2022 Summary: The request is for a standard office equipment upgrade that aligns with typical ergonomic workplace policies. The amount is reasonable for a standing desk and the description provides sufficient clarity regarding the purpose of the expense.\n\u2022 Risk Level: LOW\n\u2022 Recommendation: APPROVE\n\u2022 Risk Flags: None\n\n\u23f8\ufe0f Workflow paused. Please review and reply with your decision (e.g. 'APPROVE' or 'REJECT').",
+                  "message": "\ud83d\udea8 EXPENSE REVIEW ALERT (Amount: $500.00 >= $100.00)\n\u2022 Submitter: dave@company.com\n\u2022 Category: equipment\n\u2022 Description (Scrubbed): Ergonomic standing desk\n\u2022 Date: 2026-06-06\n\n\ud83d\udcca LLM Risk Assessment (gemini-3.1-flash-lite):\n\u2022 Summary: The expense is for a standard office equipment item at a reasonable price point. No obvious policy violations were detected.\n\u2022 Risk Level: LOW\n\u2022 Recommendation: APPROVE\n\u2022 Risk Flags: None\n\n\u23f8\ufe0f Workflow paused. Please review and reply with your decision (e.g. 'APPROVE' or 'REJECT').",
                   "response_schema": null
                 },
                 "name": "adk_request_input"
@@ -878,7 +878,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-775b9ed1-f369-4e01-8cbb-71462048eab1",
+        "invocation_id": "e-01869078-6739-4fe8-a64f-b16395ecbb54",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {},
@@ -892,8 +892,8 @@
         "long_running_tool_ids": [
           "human_approval"
         ],
-        "id": "c4fe4ddd-a132-43f6-bf3a-afd4d812f296",
-        "timestamp": 1791679747.048161
+        "id": "e1cf081e-ddcd-4fc8-845d-d3cb145a9116",
+        "timestamp": 1791692365.879925
       }
     ],
     "decision": "DISAPPROVE",
@@ -907,7 +907,7 @@
           ],
           "role": "model"
         },
-        "invocation_id": "e-775b9ed1-f369-4e01-8cbb-71462048eab1",
+        "invocation_id": "e-01869078-6739-4fe8-a64f-b16395ecbb54",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {},
@@ -928,14 +928,14 @@
           },
           "risk_assessment": {
             "risk_level": "LOW",
-            "summary": "The request is for a standard office equipment upgrade that aligns with typical ergonomic workplace policies. The amount is reasonable for a standing desk and the description provides sufficient clarity regarding the purpose of the expense.",
+            "summary": "The expense is for a standard office equipment item at a reasonable price point. No obvious policy violations were detected.",
             "flags": [],
             "recommendation": "APPROVE"
           },
           "redacted_categories": [],
           "security_flagged": false,
           "notes": "Human approver decision: DISAPPROVE",
-          "timestamp": "2026-10-11T00:49:07.738362"
+          "timestamp": "2026-10-11T04:19:26.507035"
         },
         "node_info": {
           "path": "ambient_expense_agent@1/human_approval@1",
@@ -943,11 +943,11 @@
             "ambient_expense_agent@1/human_approval@1"
           ]
         },
-        "id": "a7113732-14d1-46de-a51d-da3fb3bb9a95",
-        "timestamp": 1791679747.7384977
+        "id": "954b5171-ac5f-4611-8c43-b462664f5a3c",
+        "timestamp": 1791692366.5071418
       },
       {
-        "invocation_id": "e-775b9ed1-f369-4e01-8cbb-71462048eab1",
+        "invocation_id": "e-01869078-6739-4fe8-a64f-b16395ecbb54",
         "author": "ambient_expense_agent",
         "actions": {
           "state_delta": {},
@@ -968,14 +968,14 @@
           },
           "risk_assessment": {
             "risk_level": "LOW",
-            "summary": "The request is for a standard office equipment upgrade that aligns with typical ergonomic workplace policies. The amount is reasonable for a standing desk and the description provides sufficient clarity regarding the purpose of the expense.",
+            "summary": "The expense is for a standard office equipment item at a reasonable price point. No obvious policy violations were detected.",
             "flags": [],
             "recommendation": "APPROVE"
           },
           "redacted_categories": [],
           "security_flagged": false,
           "notes": "Human approver decision: DISAPPROVE",
-          "timestamp": "2026-10-11T00:49:07.738362"
+          "timestamp": "2026-10-11T04:19:26.507035"
         },
         "node_info": {
           "path": "ambient_expense_agent@1/record_outcome@1",
@@ -984,8 +984,8 @@
             "ambient_expense_agent@1"
           ]
         },
-        "id": "7594f829-84fe-49f6-b560-fc6ebd1d9570",
-        "timestamp": 1791679747.8803558
+        "id": "3031e472-b279-40c0-8c89-af94ef2020af",
+        "timestamp": 1791692366.6259139
       }
     ]
   }
