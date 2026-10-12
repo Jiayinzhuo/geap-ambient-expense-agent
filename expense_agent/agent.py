@@ -284,6 +284,28 @@ def auto_approve(ctx: Context, node_input: dict):
     )
 
 
+EXPENSE_POLICY: dict[str, dict[str, Any]] = {
+    "travel": {"per_item_limit_usd": 1500.0, "receipt_required": True},
+    "meals": {"per_item_limit_usd": 150.0, "receipt_required": True},
+    "equipment": {"per_item_limit_usd": 800.0, "receipt_required": True},
+    "hardware": {"per_item_limit_usd": 800.0, "receipt_required": True},
+    "software": {"per_item_limit_usd": 500.0, "receipt_required": True},
+    "default": {"per_item_limit_usd": 300.0, "receipt_required": True},
+}
+
+
+def lookup_expense_policy(category: str) -> dict[str, Any]:
+    """Return the company expense policy limits for a category.
+
+    Args:
+        category: Expense category, e.g. travel, meals, equipment, software.
+
+    Returns:
+        A dict with per_item_limit_usd and receipt_required for that category.
+    """
+    return {"category": category, **EXPENSE_POLICY.get(category.strip().lower(), EXPENSE_POLICY["default"])}
+
+
 # Step 3a: LLM evaluates risk factors for clean expenses >= $100
 risk_reviewer = LlmAgent(
     name="risk_reviewer",
@@ -294,8 +316,11 @@ risk_reviewer = LlmAgent(
         "Analyze the report for financial risks, policy violations, reasonableness, and irregularities. "
         "Identify specific risk flags (e.g. unusually high amount, vague description, luxury items, weekend charges). "
         "Assign an overall risk level (LOW, MEDIUM, or HIGH), provide a concise summary of your judgment, "
-        "and recommend whether to APPROVE, REJECT, or flag for FURTHER_INSPECTION."
+        "and recommend whether to APPROVE, REJECT, or flag for FURTHER_INSPECTION. "
+    "Always call lookup_expense_policy with the expense category first, and compare the amount "
+    "to the returned per_item_limit_usd; an amount above the limit is a risk flag."
     ),
+    tools=[lookup_expense_policy],
     output_schema=RiskAssessment,
     output_key="risk_assessment",
 )

@@ -55,6 +55,7 @@ def attach_reasoning_engine_routes(app: FastAPI) -> None:
                 session_service_builder=services.get_session_service,
                 artifact_service_builder=services.get_artifact_service,
                 instrumentor_builder=_no_op_instrumentor_builder,
+                enable_tracing=True,
             )
             runtime.set_up()
             operations = runtime.register_operations()

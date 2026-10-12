@@ -50,7 +50,7 @@ allow_origins = (
 )
 
 # Developer checklist: Set otel_to_cloud=False
-otel_to_cloud = False
+otel_to_cloud = True
 
 AGENT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
