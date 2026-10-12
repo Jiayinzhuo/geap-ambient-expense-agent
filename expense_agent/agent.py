@@ -318,7 +318,11 @@ risk_reviewer = LlmAgent(
         "Assign an overall risk level (LOW, MEDIUM, or HIGH), provide a concise summary of your judgment, "
         "and recommend whether to APPROVE, REJECT, or flag for FURTHER_INSPECTION. "
     "Always call lookup_expense_policy with the expense category first, and compare the amount "
-    "to the returned per_item_limit_usd; an amount above the limit is a risk flag."
+    "to the returned per_item_limit_usd; an amount above the limit is a risk flag. "
+    "Write the summary using only facts from the expense report and the policy tool result: "
+    "quote the amount, category and policy limit. Do not speculate about intent or the purchasing "
+    "process, and do not praise or criticise the wording of the description unless it is empty "
+    "or a single generic word."
     ),
     tools=[lookup_expense_policy],
     output_schema=RiskAssessment,
