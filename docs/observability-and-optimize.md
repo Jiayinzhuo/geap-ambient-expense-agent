@@ -46,7 +46,16 @@ ADK_TELEMETRY_IGNORE_RUN_CONFIG=true
 OTEL_INSTRUMENTATION_GENAI_COMPLETION_HOOK=none
 ```
 
-Because `--update-env-vars` resets omitted vars, pass this set together with the rest of your env vars on every deploy (check `agents-cli deploy --help` for the exact syntax on your version), keep the `--agent-identity` and `--agent-gateway-ingress=...` flags from [governance-setup.md](governance-setup.md), and confirm afterwards:
+The deploy that turned them on (it keeps Agent Identity and the gateway binding from [governance-setup.md](governance-setup.md)):
+
+```bash
+agents-cli deploy --project=jzhuo08-demo --region=us-east1 \
+  --deployment-target=agent_runtime --agent-identity --update-only \
+  --agent-gateway-ingress=projects/444323067071/locations/us-east1/agentGateways/expense-ingress-gateway \
+  --update-env-vars OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=SPAN_AND_EVENT,ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS=true,OTEL_INSTRUMENTATION_GENAI_COMPLETION_HOOK=none,ADK_TELEMETRY_IGNORE_RUN_CONFIG=true
+```
+
+`--update-env-vars` resets the vars you leave out, so repeat all four on every later deploy, or capture silently goes back to the defaults and the monitor stops scoring. Confirm afterwards:
 
 ```bash
 ENG=projects/444323067071/locations/us-east1/reasoningEngines/7197127138003124224
@@ -68,7 +77,7 @@ A burst of 30 requests (x 4 metrics) gave 82 result entries, 20 of them `Judge m
 
 ```bash
 # 12 requests that all reach the model (amounts >= $100), same requests every run
-uv run python scripts/generate_online_traffic.py --n 12 --review-only
+uv run python scripts/generate_online_traffic.py --review-only --n 12 --delay 2
 ```
 
 Wait for the next monitor run (about 10 minutes), then read the results from Cloud Logging. Replace the timestamp with the time you sent the traffic (UTC):

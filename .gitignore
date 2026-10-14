@@ -220,3 +220,6 @@ __pycache__/
 deployment_metadata.json
 .predeploy_stamp
 artifacts/governance/floor_setting_after.yaml
+
+# Local before/after score dumps from the optimize loop
+artifacts/optimize/
