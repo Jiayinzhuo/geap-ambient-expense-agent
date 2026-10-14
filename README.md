@@ -12,6 +12,13 @@ Agent Platform. Business rules run as plain Python; the LLM is used only where j
 
 Part of a series on the Gemini Enterprise Agent Platform: Build, Scale, Govern, Optimize.
 
+| Stage | What is in this repo | Guide |
+|---|---|---|
+| Build | ADK 2.0 graph, fail-closed human approval, PII scrub, unit tests | This README |
+| Scale | Deployed to Agent Runtime; resume a paused session from a script | This README |
+| Govern | Agent Identity, ingress Agent Gateway with a Model Armor template, `failOpen: false`, tested with requests that must be blocked | [docs/governance-setup.md](docs/governance-setup.md) |
+| Optimize | Pre-deploy eval gate with a deterministic PII check; online monitor scoring live traces; one prompt change measured before and after | [docs/observability-and-optimize.md](docs/observability-and-optimize.md) |
+
 ## Credit
 
 Based on Google's codelab
@@ -41,9 +48,13 @@ event (Pub/Sub or JSON)
 | `app/` | Agents CLI wrapper that serves `expense_agent` (FastAPI, deployment adapters) |
 | `deployment/`, `Dockerfile` | Agents CLI deployment scaffold |
 | `scripts/test_deployed_engine.py` | Verifies a deployed engine, including resuming a paused session |
+| `scripts/test_gateway_block.py` | Sends benign, jailbreak and SSN/card requests through the gateway; expects 200, 403, 403 |
+| `scripts/generate_online_traffic.py` | Sends repeatable traffic for the online monitor (`--n`, `--review-only`) |
+| `scripts/governance/` | Model Armor template script, gateway and fail-closed extension definitions |
+| `docs/` | Setup guides for Govern and Optimize, and the eval-gate reports |
 | `tests/unit`, `tests/integration` | Routing, redaction, and decision-parsing tests |
 | `tests/eval/` | LLM-as-judge evals: routing correctness and security containment |
-| `artifacts/` | Example eval traces, grade results, and deployed-engine test output (IDs redacted) |
+| `artifacts/` | Eval traces, grade results, gate demo, governance snapshots and test output |
 
 ## What I changed beyond the lab
 
@@ -113,17 +124,71 @@ Example: on the pre-fix build the gate fails (`raw_pii_absent` 0.8333) while
 the LLM judges still pass on average. On the fixed build it passes. See
 `artifacts/gate_demo/`.
 
-## Security note
+## Govern: gateway, Model Armor, Agent Identity
 
-The security checkpoint is a **local, regex-based mock**. It catches the demo cases but is not a
-production control. In production, enforce policy outside the model with Agent Gateway,
-Model Armor, Agent Identity, and semantic governance policies. Also review what your logging
-setup stores: redaction inside the workflow does not by itself change what request logs capture.
+The engine runs as `AGENT_IDENTITY` and is bound to a Client-to-Agent ingress Agent Gateway
+that calls a Model Armor template (prompt-injection and jailbreak filter, basic Sensitive Data
+Protection). The gateway's authorization extension is set to `failOpen: false`; the Console
+default is `true`, which lets traffic through unscreened if Model Armor cannot be called.
+
+Verified through the gateway (`scripts/test_gateway_block.py`), and confirmed in Model Armor's
+own log (client `AGENT_GATEWAY`, ALLOW then BLOCK):
+
+| Request | Result |
+|---|---|
+| Benign ("Team lunch") | HTTP 200 |
+| Jailbreak text | HTTP 403 |
+| Valid-format SSN and card number | HTTP 403 |
+
+Full setup, IAM grants and gotchas: [docs/governance-setup.md](docs/governance-setup.md).
+
+## Optimize: online monitor and a measured change
+
+An online monitor scores live traces with four judges (response quality, tool use,
+groundedness, safety). It needed span export, `enable_tracing=True`, content capture with the
+upload hook off, and a tool on the LLM agent before it could score anything.
+
+One prompt change (the risk reviewer must look up the policy and quote only facts), measured
+on the same 12 requests by the same monitor:
+
+| Metric (higher is better) | Before (rev 17) | After (rev 18) |
+|---|---|---|
+| Groundedness, average | 0.70 | 0.96 |
+| Groundedness, worst request | 0.00 | 0.67 |
+| Final response quality, average | 0.92 | 0.97 |
+| Tool use, safety | 1.0 | 1.0 |
+| Verdicts (reject : approve) | 5 : 7 | 5 : 7 |
+
+12 requests, one run each, LLM-judged: evidence, not proof. Same model on both revisions.
+Details and how to rerun: [docs/observability-and-optimize.md](docs/observability-and-optimize.md).
+
+## Security note and open gaps
+
+- The in-graph security checkpoint is a **local, regex-based mock** used for routing. The real
+  enforcement is the gateway and Model Armor above.
+- **Not governed:** the Pub/Sub trigger path (runs in-process) and methods other than `query`
+  and `streamQuery`.
+- **SDK path:** `scripts/test_deployed_engine.py` (Vertex SDK) passed a jailbreak that REST
+  blocked with a 403. Cause not verified; treat that path as unscreened.
+- **Response path:** one Model Armor response-path span reported "Fail-Open Configured" while
+  the extension is `failOpen: false`. Cause unknown.
+- **Content capture is on** so the monitor can score. Traces contain prompts and responses.
+- Not tested: rollback of the identity and gateway binding, organization-level features
+  (this project has no organization), semantic governance, anomaly detection.
 
 ## Status
 
-- `v1-local`: runs locally, evaluated with Agents CLI
-- `v2-deployed`: deployed to Agent Runtime and verified
+| Tag | Stage |
+|---|---|
+| `v1-local` | Runs locally, evaluated with Agents CLI |
+| `v2-deployed` | Deployed to Agent Runtime and verified |
+| `v2.1-deployed` | Redaction fix redeployed; raw PII check passes on the live engine |
+| `v3-eval-gate` | `make predeploy` gate with the deterministic `raw_pii_absent` check |
+| `v4-governed` | Agent Identity, ingress Agent Gateway and Model Armor; block tests pass |
+| `v5-observable` | Online monitor scores live traces |
+| `v6-optimized` | Grounded risk summaries, measured by the online monitor |
+
+Compare any two stages with `git diff <tag>..<tag>`.
 
 ## License
 
