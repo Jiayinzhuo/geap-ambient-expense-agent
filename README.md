@@ -148,7 +148,7 @@ An online monitor scores live traces with four judges (response quality, tool us
 groundedness, safety). It needed span export, `enable_tracing=True`, content capture with the
 upload hook off, and a tool on the LLM agent before it could score anything.
 
-One prompt change (the risk reviewer must look up the policy and quote only facts), measured
+One prompt change (the risk reviewer, which already called the policy tool, must now quote only facts), measured
 on the same 12 requests by the same monitor:
 
 | Metric (higher is better) | Before (rev 17) | After (rev 18) |

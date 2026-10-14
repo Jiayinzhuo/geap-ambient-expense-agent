@@ -101,7 +101,7 @@ Filter on `event.name` in `jq`, not in the `gcloud` filter: the quoted label key
 
 ## The optimize loop: one change, measured
 
-**Change** (`v6-optimized`, commit `05bad66`): the risk reviewer must call `lookup_expense_policy` with the expense category first, compare the amount to the returned limit, and write its summary using only facts from the report and the tool result (amount, category, policy limit), with no speculation about intent.
+**Change** (`v6-optimized`, commit `05bad66`): revision 17 already called `lookup_expense_policy` (added in `v5-observable`) and compared the amount to the returned limit. The change adds four sentences to the risk reviewer's instruction: write the summary using only facts from the report and the tool result, quote the amount, category and policy limit, do not speculate about intent or the purchasing process, and do not comment on the wording of the description. Nothing else changed: same model, same tool.
 
 **Method:** the same 12 requests (`--n 12 --review-only`, fixed seed) sent to revision 17 (before) and revision 18 (after), scored by the same monitor. Same model on both revisions; this is not a model comparison.
 
