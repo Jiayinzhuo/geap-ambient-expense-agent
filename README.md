@@ -160,6 +160,8 @@ on the same 12 requests by the same monitor:
 | Verdicts (reject : approve) | 5 : 7 | 5 : 7 |
 
 12 requests, one run each, LLM-judged: evidence, not proof. Same model on both revisions.
+Final response quality is graded against rubrics generated from each revision's own prompt, so
+groundedness is the like-for-like number.
 Details and how to rerun: [docs/observability-and-optimize.md](docs/observability-and-optimize.md).
 
 ## Security note and open gaps

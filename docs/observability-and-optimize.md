@@ -87,13 +87,17 @@ gcloud logging read \
   'logName="projects/jzhuo08-demo/logs/aiplatform.googleapis.com%2Fonline_evaluator" AND timestamp>="2026-10-12T10:00:00Z"' \
   --project=jzhuo08-demo --limit=500 --format=json > scores.json
 
-jq -r '.[] | (.labels + (.jsonPayload // {})) as $f
-  | select($f["event.name"] == "gen_ai.evaluation.result")
-  | [$f["runtime_revision_id"], $f["gen_ai.evaluation.name"], $f["gen_ai.evaluation.score.value"]] | @tsv' \
+jq -r '.[] | select(.labels["event.name"] == "gen_ai.evaluation.result")
+  | [.labels["runtime_revision_id"], .labels["gen_ai.evaluation.name"], .labels["gen_ai.evaluation.score.value"]] | @tsv' \
   scores.json | sort | head -60
 ```
 
-Filter on `event.name` in `jq`, not in the `gcloud` filter: the quoted label key in the filter returned nothing. Error entries carry `EVALUATION_ERROR` in the explanation field. Open a trace from the monitor page or Trace Explorer to see why a request scored low.
+Where things are in a result entry:
+
+- `labels`: `event.name` (`gen_ai.evaluation.result`), `gen_ai.evaluation.name`, `gen_ai.evaluation.score.value`, `runtime_revision_id`, `gen_ai.conversation.id`.
+- `jsonPayload.candidateResult.rubricVerdicts`: for rubric-based metrics, each rubric the judge checked, its verdict and its reasoning. This is the fastest way to see why a request scored low.
+
+Filter on `event.name` in `jq`, not in the `gcloud` filter: the quoted label key in the filter returned nothing. The monitor also writes a status entry every run (labels only, no score), so a plain `--limit` on recent entries can return only those; use a timestamp window. Error entries carry `EVALUATION_ERROR` in the explanation.
 
 ## The optimize loop: one change, measured
 
@@ -115,6 +119,15 @@ Filter on `event.name` in `jq`, not in the `gcloud` filter: the quoted label key
 The decisions did not change; the explanations became better grounded.
 
 **Limits.** 12 requests, one run per revision, scored by LLM judges. This is evidence on this test set, not statistical proof. The groundedness judge penalizes opinions, speculation and verdict labels, and one baseline score of 0 looked partly like a judge quirk.
+
+**Final response quality is not a fixed yardstick.** Its rubrics are generated from the agent's own instructions: on revision 18 they include "the summary includes the expense amount, the expense category, and the policy limit" and "does not speculate about the submitter's intent", which are lines from the new prompt. So revision 17 and revision 18 were each graded against their own prompt's rubrics. Read the 0.92 to 0.97 change as "each revision does what its prompt asks", not as a like-for-like comparison. Groundedness, tool use and safety do not depend on the prompt's wording in the same way, so groundedness is the headline number. To see the rubrics each revision was judged on:
+
+```bash
+jq -r '.[] | select(.labels["gen_ai.evaluation.name"] == "final_response_quality_v1")
+  | .labels["runtime_revision_id"] as $r
+  | .jsonPayload.candidateResult.rubricVerdicts[]?.evaluatedRubric.content.property.description
+  | "\($r)\t\(.)"' scores.json | sort -u
+```
 
 ## Open findings
 
