@@ -118,6 +118,10 @@ Filter on `event.name` in `jq`, not in the `gcloud` filter: the quoted label key
 
 The decisions did not change; the explanations became better grounded.
 
+![Before and after table, every metric](images/optimize-table.png)
+
+![Groundedness per request, before and after](images/optimize-scores.png)
+
 **Limits.** 12 requests, one run per revision, scored by LLM judges. This is evidence on this test set, not statistical proof. The groundedness judge penalizes opinions, speculation and verdict labels, and one baseline score of 0 looked partly like a judge quirk.
 
 **Final response quality is not a fixed yardstick.** Its rubrics are generated from the agent's own instructions: on revision 18 they include "the summary includes the expense amount, the expense category, and the policy limit" and "does not speculate about the submitter's intent", which are lines from the new prompt. So revision 17 and revision 18 were each graded against their own prompt's rubrics. Read the 0.92 to 0.97 change as "each revision does what its prompt asks", not as a like-for-like comparison. Groundedness, tool use and safety do not depend on the prompt's wording in the same way, so groundedness is the headline number. To see the rubrics each revision was judged on:
