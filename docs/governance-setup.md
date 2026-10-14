@@ -10,11 +10,11 @@ How the governance layer of `geap-ambient-expense-agent` was set up and verified
 | Model Armor template | `expense-armor-template` |
 | Gateway | `expense-ingress-gateway` (Client-to-Agent, Google-managed) |
 
-Replace these with your own values. Git tags: `v3-eval-gate` (evaluation), `v4-governed` (this work).
+Replace these with your own values. Git tags: `v3-eval-gate` (evaluation), `v4-governed` (this work). The online monitor and the optimize loop that came after are in [observability-and-optimize.md](observability-and-optimize.md).
 
 ## What this protects, and what it does not
 
-- **Protected:** requests to the deployed engine's `query` / `streamQuery` over REST. Model Armor screens the prompt and response; a block returns HTTP 403 to the caller and never reaches the agent.
+- **Protected:** requests to the deployed engine's `query` / `streamQuery` over REST. Model Armor screens the prompt and response; a block returns HTTP 403 to the caller and never reaches the agent. The block tests below cover prompts only; response screening was not tested with a response that should be blocked (see gotcha 8).
 - **Not governed:** the Pub/Sub trigger path (runs in-process), other methods such as `asyncQuery`, and non-ADK payloads.
 - **Not available without an organization:** Security Command Center risk views and org-level policies. Whether every gateway feature works without an org is not documented; only what is listed under "Verified" below was tested.
 
@@ -171,6 +171,11 @@ Expect `ALLOW` for the benign call and `BLOCK` for the other two.
 5. **The gateway request log was empty** (`networkservices.googleapis.com/Gateway`). The Model Armor log was the usable evidence. Cause not investigated.
 6. **The Vertex SDK script was not blocked.** `scripts/test_deployed_engine.py` (SDK, `stream_query_reasoning_engine`) passed a jailbreak with normal events, while the same engine returned 403 over REST. The cause was not verified. Treat the SDK path as unscreened until tested further.
 7. **Monitoring lag**: the Model Armor Monitoring page showed only the direct template tests at first; use the log query above for the gateway's calls.
+8. **A response-path span reported fail-open.** Later, in Cloud Trace, one Model Armor response-path span showed `501 Unsupported Input` with reason `Fail-Open Configured` (1 of 18 screened responses, a $12.50 auto-approved request), with no `SANITIZE_MODEL_RESPONSE` entry in the Model Armor log for it. The extension is `failOpen: false` (`describe` omits the field when it is false) and the template has no fail-open setting. A second response-path span returned allow (200) but was flagged Error. Neither is explained. Check with:
+   ```bash
+   gcloud service-extensions authz-extensions describe expense-ingress-gateway-aisecurity-authzextension \
+     --location=us-east1 --format=yaml | grep -i failopen   # no output means false
+   ```
 
 ## Cleanup
 
