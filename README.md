@@ -109,9 +109,10 @@ Verified on the live engine:
 - A $1M injection with an SSN is redacted, skips the model, and escalates to a human.
 - Resuming with APPROVE approves; resuming with DISAPPROVE rejects (fail-closed).
 
-The Console Playground (preview) shows the pause but does not resume it; sending "APPROVE"
-there starts a new run and fails to parse. Resume by sending a `function_response` to the
-engine, as `scripts/test_deployed_engine.py` does.
+In the Console Playground (preview), typing APPROVE or REJECT at the pause resumes the run and
+completes it. The Playground may also show an error that the reply is not JSON; the result is
+still correct. From code, resume by sending a `function_response` to the same session, as
+`scripts/test_deployed_engine.py` does.
 
 ## Evaluation gate
 
